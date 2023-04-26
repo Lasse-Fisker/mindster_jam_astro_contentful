@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 
 dotenv.config({
-  path: __dirname + "/.env.local",
+  path: __dirname + "/.env",
 });
 
 const TOKEN = process.env.CONTENTFUL_ACCESS_TOKEN;
