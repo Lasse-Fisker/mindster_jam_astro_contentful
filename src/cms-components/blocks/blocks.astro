@@ -1,0 +1,23 @@
+---
+import type { PageFragment } from "../../gql/graphql";
+import FancyHeaderblock from "./fancy-header.block.astro";
+import RichTextblock from "./rich-text.block.astro";
+
+type Props = { blocks: NonNullable<PageFragment["blocksCollection"]>["items"] };
+
+const { blocks } = Astro.props;
+---
+
+<>
+  {
+    blocks?.map((block) => {
+      switch (block?.__typename) {
+        case "FancyHeaderBlock":
+          console.log(block);
+          return <FancyHeaderblock block={block} />;
+        case "RichTextBlock":
+          return <RichTextblock block={block} />;
+      }
+    })
+  }
+</>

@@ -1,0 +1,42 @@
+---
+import Blocks from "../cms-components/blocks/blocks.astro";
+import type {
+  GetAllPagesQuery,
+  GetPageByIdQuery,
+  GetPageByIdQueryVariables,
+} from "../gql/graphql";
+import Layout from "../layouts/layout.astro";
+import client from "../utils/apollo-client";
+import { getAllPagesQuery, getPageByIdQuery } from "./_path.queries";
+
+export async function getStaticPaths() {
+  const { data } = await client.query<GetAllPagesQuery>({
+    query: getAllPagesQuery,
+  });
+
+  return (
+    data.pageCollection?.items?.map((page) => ({
+      params: { path: page?.path?.join("/") },
+      props: {
+        id: page?.sys.id,
+      },
+    })) ?? []
+  );
+}
+
+const { id } = Astro.props;
+
+const { data } = await client.query<
+  GetPageByIdQuery,
+  GetPageByIdQueryVariables
+>({
+  query: getPageByIdQuery,
+  variables: {
+    id,
+  },
+});
+---
+
+<Layout title={data.page?.title ?? "wut?"}>
+  <Blocks blocks={data.page?.blocksCollection?.items ?? []} />
+</Layout>

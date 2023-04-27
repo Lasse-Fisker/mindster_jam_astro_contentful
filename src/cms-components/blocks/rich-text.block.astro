@@ -1,0 +1,12 @@
+---
+import type { RichTextBlockFragment } from "../../gql/graphql";
+import RichText from "../rich-text.astro";
+
+type Props = {
+  block: RichTextBlockFragment;
+};
+
+const { block } = Astro.props;
+---
+
+<RichText json={block.text?.json} />

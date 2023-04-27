@@ -1,0 +1,19 @@
+---
+import type { FancyHeaderBlockFragment } from "../../gql/graphql";
+import RichText from "../rich-text.astro";
+
+export type Props = {
+  block: FancyHeaderBlockFragment;
+};
+
+const { block } = Astro.props;
+---
+
+<header
+  class="w-full bg-pink-300 flex items-center justify-center h-[70vh] bg-cover"
+  style={{ backgroundImage: `url(${block.bgImage?.url})` }}
+>
+  <div class="w-3/5 text-white">
+    <RichText json={block.text?.json} />
+  </div>
+</header>

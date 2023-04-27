@@ -1,0 +1,9 @@
+---
+import type { ButtonLinkFragment } from "../../gql/graphql";
+
+export type Props = ButtonLinkFragment;
+
+const { href, text } = Astro.props;
+---
+
+<a class="py-5 px-3 bg-gray-500 text-white" href={href}>{text}</a>

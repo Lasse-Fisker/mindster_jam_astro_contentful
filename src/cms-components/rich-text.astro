@@ -1,0 +1,23 @@
+---
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { BLOCKS, Block, Inline } from "@contentful/rich-text-types";
+
+type Props = {
+  json: any;
+  links?: any;
+};
+
+const { json } = Astro.props;
+
+const entryRenderer = (node: Block | Inline) => {
+  return "<div> custom comp </div>";
+};
+
+const text = await documentToHtmlString(json, {
+  renderNode: {
+    [BLOCKS.EMBEDDED_ENTRY]: entryRenderer,
+  },
+});
+---
+
+<div set:html={text} />
